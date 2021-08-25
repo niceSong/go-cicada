@@ -3,8 +3,8 @@ package test
 import (
 	"errors"
 	"fmt"
+	"github.com/niceSong/go-cicada/src/exception"
 	"github.com/sirupsen/logrus"
-	"go-cicada/src/exception"
 	"net/http"
 	"testing"
 )
