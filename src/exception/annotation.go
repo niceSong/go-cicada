@@ -2,12 +2,12 @@ package exception
 
 import (
 	"fmt"
+	"github.com/niceSong/goCicada/src/util"
 	"github.com/sirupsen/logrus"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"log"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -16,7 +16,7 @@ import (
 var annotationRegex = "@CicadaError\\([\\s]*code[\\s]*=[\\s]*(.*?),[\\s]*message[\\s]*=[\\s]*\"(.*?)\"[\\s]*\\)$"
 
 func CicadaScan(relativePath string) {
-	path, _ := os.Getwd()
+	path := util.GetCurrentAbPath()
 	projectPath := strings.Split(path, "src")
 	fileSet := token.NewFileSet()
 	if relativePath == "" {
@@ -32,7 +32,6 @@ func CicadaScan(relativePath string) {
 			addFileError(commentMap)
 		}
 	}
-	fmt.Println("")
 }
 
 func addFileError(commentMap ast.CommentMap) {
