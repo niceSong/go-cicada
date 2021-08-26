@@ -13,12 +13,15 @@ import (
 	"strings"
 )
 
-var annotationRegex = "^[\\S\\s]+=[\\s]*(.*?),[\\S\\s]+=[\\s]*\"(.*?)\"\\)$"
+var annotationRegex = "@CicadaError\\([\\s]*code[\\s]*=[\\s]*(.*?),[\\s]*message[\\s]*=[\\s]*\"(.*?)\"[\\s]*\\)$"
 
-func AnnotationHandler(relativePath string) {
+func CicadaScan(relativePath string) {
 	path, _ := os.Getwd()
 	projectPath := strings.Split(path, "src")
 	fileSet := token.NewFileSet()
+	if relativePath == "" {
+		relativePath = "/src/exceptions"
+	}
 	pack, err := parser.ParseDir(fileSet, projectPath[0]+relativePath, nil, parser.ParseComments)
 	if err != nil {
 		log.Fatal(err)
@@ -36,7 +39,7 @@ func addFileError(commentMap ast.CommentMap) {
 	for node, groups := range commentMap {
 		for _, commentGroup := range groups {
 			for _, comment := range commentGroup.List {
-				if strings.Contains(comment.Text, "@eb5gcErr") {
+				if strings.Contains(comment.Text, "@CicadaError") {
 					funcName := node.(*ast.Field).Names[0].Name
 					r := regexp.MustCompile(annotationRegex)
 					annotationInfo := r.FindStringSubmatch(comment.Text)
@@ -59,7 +62,7 @@ func addFileError(commentMap ast.CommentMap) {
 						logger.Errorln(throwable)
 						return throwable
 					}
-					Eb5gcErrorMap[funcName] = errorHandler
+					CicadaErrorMap[funcName] = errorHandler
 				}
 			}
 		}
