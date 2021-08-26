@@ -19,9 +19,9 @@ func CicadaScan(relativePath string) {
 	path, _ := os.Getwd()
 	var paths []string
 	if strings.Contains(path, "src") {
-		paths = strings.Split(path, "src")
+		paths = strings.Split(path, "/src")
 	} else {
-		paths = strings.Split(path, "bin")
+		paths = strings.Split(path, "/bin")
 	}
 	fileSet := token.NewFileSet()
 	if relativePath == "" {
