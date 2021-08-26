@@ -42,7 +42,7 @@ func addFileError(commentMap ast.CommentMap) {
 					annotationInfo := r.FindStringSubmatch(comment.Text)
 					code, convErr := strconv.Atoi(annotationInfo[1])
 					if convErr != nil {
-						log.Fatal("go-cicada: Code must number")
+						log.Fatal("goCicada: Code must number")
 					}
 					errorHandler := func(logger *logrus.Entry, httpStatus int32, errs ...error) Throwable {
 						var detail string

@@ -1,4 +1,4 @@
-module github.com/niceSong/go-cicada
+module github.com/niceSong/goCicada
 
 go 1.14
 

@@ -3,7 +3,7 @@ package test
 import (
 	"errors"
 	"fmt"
-	"github.com/niceSong/go-cicada/src/exception"
+	"github.com/niceSong/goCicada/src/exception"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"testing"
