@@ -44,12 +44,17 @@ func addFileError(commentMap ast.CommentMap) {
 					if convErr != nil {
 						log.Fatal("go-cicada: Code must number")
 					}
-					errorHandler := func(err error, logger *logrus.Entry, httpStatus int32) Throwable {
+					errorHandler := func(logger *logrus.Entry, httpStatus int32, errs ...error) Throwable {
+						var detail string
+						for _, err := range errs {
+							err.Error()
+							detail = fmt.Sprintf(detail+"%s", err.Error())
+						}
 						throwable := Throwable{
 							Status: httpStatus,
 							Code:   code,
 							Cause:  annotationInfo[2],
-							Detail: err.Error(),
+							Detail: detail,
 						}
 						logger.Errorln(throwable)
 						return throwable
